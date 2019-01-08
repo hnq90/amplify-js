@@ -958,7 +958,10 @@ export default class AuthClass {
         }
 
         try {
-            federatedUser = JSON.parse(this._storage.getItem('aws-amplify-federatedInfo')).user;
+            const cachedFederatedInfo = this._storage.getItem('aws-amplify-federatedInfo');
+            if (cachedFederatedInfo) {
+                federatedUser = JSON.parse(cachedFederatedInfo).user;
+            }
         } catch (e) {
             logger.debug('cannot load federated user from auth storage');
         }
@@ -1052,7 +1055,10 @@ export default class AuthClass {
         // first to check whether there is federation info in the auth storage
         let federatedInfo = null;
         try {
-            federatedInfo = JSON.parse(this._storage.getItem('aws-amplify-federatedInfo'));
+            const cachedFederatedInfo = this._storage.getItem('aws-amplify-federatedInfo');
+            if (cachedFederatedInfo) {
+                federatedInfo = JSON.parse(cachedFederatedInfo);
+            }
         } catch (e) {
             logger.debug('failed to get or parse item aws-amplify-federatedInfo', e);
         }
